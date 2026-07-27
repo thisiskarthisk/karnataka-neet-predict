@@ -126,8 +126,8 @@ export default function HeroSection({
 }: HeroSectionProps) {
   const router = useRouter();
 
-  // ---- Tab state ----
-  const [activeTab, setActiveTab] = useState<HeroTab>('rank');
+  // ---- Tab state (defaults to College Predictor) ----
+  const [activeTab, setActiveTab] = useState<HeroTab>('college');
 
   // ---- Portal mount guard (document is undefined during SSR) ----
   const [mounted, setMounted] = useState(false);

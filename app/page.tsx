@@ -38,8 +38,8 @@ export default function HomePage() {
     setMounted(true);
   }, []);
 
-  // Active tool tab
-  const [activeTab, setActiveTab] = useState<'rank' | 'college'>('rank');
+  // Active tool tab - default to College Predictor
+  const [activeTab, setActiveTab] = useState<'rank' | 'college'>('college');
 
   // Rank predictor inputs
   const [marks, setMarks] = useState('');

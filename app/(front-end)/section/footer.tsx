@@ -136,7 +136,27 @@ export default function Footer({ switchTab, openCounselling, counsellingKitURL }
 
         {/* Bottom Bar: Copyright & Social Links */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
-          <p>© 2026 Campus Continents Educational Research Centre. All rights reserved.</p>
+          {/* <p>© 2026 Campus Continents Educational Research Centre. All rights reserved.</p>
+          <a href="/Privacy-Policy" className="hover:text-white transition-colors">
+            Privacy Policy
+          </a>
+          <a href="/Terms-of-Use" className="hover:text-white transition-colors">
+            Terms of Use
+          </a> */}
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-400 py-6 px-4">
+            <p>© 2026 Campus Continents Educational Research Centre. All rights reserved.</p>
+            <div className="flex items-center gap-6">
+              <span className="text-slate-700">•</span>
+              <a href="/Privacy-Policy" className="hover:text-white transition-colors">
+                Privacy Policy
+              </a>
+              <span className="text-slate-700">•</span>
+              <a href="/Terms-of-Use" className="hover:text-white transition-colors">
+                Terms of Use
+              </a>
+            </div>
+          </div>
+
 
           <div className="flex items-center gap-3">
             <a

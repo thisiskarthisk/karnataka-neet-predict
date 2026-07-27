@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
+import Header from '../../section/header';
+
 
 const pgFaqData = [
   {
@@ -64,89 +66,99 @@ const pgFaqData = [
 
 export default function PgFaqPage() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [isFaqOpen, setIsFaqOpen] = useState(false);
 
   const toggleFaq = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
   return (
-    <main className="min-h-screen bg-white text-[#0a0e1a] py-16 sm:py-24 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto">
-        
-        {/* Header Section */}
-        <div className="text-center mb-12 sm:mb-14">
-          <span className="inline-block px-4 py-1.5 rounded-full border border-[#4d9bf5]/30 bg-[#4d9bf5]/10 text-[#4d9bf5] text-xs font-extrabold tracking-widest uppercase mb-5">
-            FAQ
-          </span>
-          <h1 className="text-3xl sm:text-4xl lg:text-4xl font-extrabold text-[#0a0e1a] tracking-tight leading-snug mb-4">
-            Frequently Asked Questions About NEET PG Counselling
-          </h1>
-          <p className="text-[#5b6478] text-sm sm:text-base max-w-lg mx-auto leading-relaxed">
-            Answers to the questions doctors search most — from MCC and AIQ to specialty choice filling, seat allotment, and document checklists.
-          </p>
-        </div>
+      <div className="min-h-screen bg-slate-50 text-slate-900 font-sans leading-relaxed">
+        <Header
+          isHomePage={false}
+          isFaqPage={false}
+          isFaqOpen={isFaqOpen}
+          setIsFaqOpen={setIsFaqOpen}
+          onGetCounsellingClick={() => {}}
+        />
+        <main className="min-h-screen bg-white text-[#0a0e1a] py-16 sm:py-24 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl mx-auto">
+            
+            {/* Header Section */}
+            <div className="text-center mb-12 sm:mb-14">
+              <span className="inline-block px-4 py-1.5 rounded-full border border-[#4d9bf5]/30 bg-[#4d9bf5]/10 text-[#4d9bf5] text-xs font-extrabold tracking-widest uppercase mb-5">
+                FAQ
+              </span>
+              <h1 className="text-3xl sm:text-4xl lg:text-4xl font-extrabold text-[#0a0e1a] tracking-tight leading-snug mb-4">
+                Frequently Asked Questions About NEET PG Counselling
+              </h1>
+              <p className="text-[#5b6478] text-sm sm:text-base max-w-lg mx-auto leading-relaxed">
+                Answers to the questions doctors search most — from MCC and AIQ to specialty choice filling, seat allotment, and document checklists.
+              </p>
+            </div>
 
-        {/* FAQ Accordion List */}
-        <div className="space-y-3 mb-12">
-          {pgFaqData.map((item, index) => {
-            const isOpen = openIndex === index;
+            {/* FAQ Accordion List */}
+            <div className="space-y-3 mb-12">
+              {pgFaqData.map((item, index) => {
+                const isOpen = openIndex === index;
 
-            return (
-              <div
-                key={index}
-                className={`bg-[#f9fafc] border rounded-2xl overflow-hidden transition-all duration-200 ${
-                  isOpen ? 'border-[#4d9bf5]/40 shadow-md' : 'border-slate-200/80'
-                }`}
-              >
-                <button
-                  type="button"
-                  onClick={() => toggleFaq(index)}
-                  className="w-full flex items-center justify-between gap-4 p-5 sm:p-6 text-left select-none transition-colors"
-                >
-                  <span className={`text-sm sm:text-base font-bold transition-colors ${isOpen ? 'text-[#4d9bf5]' : 'text-[#0a0e1a]'}`}>
-                    {item.q}
-                  </span>
-                  <span
-                    className={`shrink-0 w-7 h-7 rounded-lg flex items-center justify-center transition-all duration-300 ${
-                      isOpen
-                        ? 'rotate-180 bg-gradient-to-r from-[#4d9bf5] to-[#2dd4bf] text-white'
-                        : 'bg-[#4d9bf5]/10 text-[#4d9bf5]'
+                return (
+                  <div
+                    key={index}
+                    className={`bg-[#f9fafc] border rounded-2xl overflow-hidden transition-all duration-200 ${
+                      isOpen ? 'border-[#4d9bf5]/40 shadow-md' : 'border-slate-200/80'
                     }`}
                   >
-                    <ChevronDown className="w-4 h-4 stroke-[2.5]" />
-                  </span>
-                </button>
+                    <button
+                      type="button"
+                      onClick={() => toggleFaq(index)}
+                      className="w-full flex items-center justify-between gap-4 p-5 sm:p-6 text-left select-none transition-colors"
+                    >
+                      <span className={`text-sm sm:text-base font-bold transition-colors ${isOpen ? 'text-[#4d9bf5]' : 'text-[#0a0e1a]'}`}>
+                        {item.q}
+                      </span>
+                      <span
+                        className={`shrink-0 w-7 h-7 rounded-lg flex items-center justify-center transition-all duration-300 ${
+                          isOpen
+                            ? 'rotate-180 bg-gradient-to-r from-[#4d9bf5] to-[#2dd4bf] text-white'
+                            : 'bg-[#4d9bf5]/10 text-[#4d9bf5]'
+                        }`}
+                      >
+                        <ChevronDown className="w-4 h-4 stroke-[2.5]" />
+                      </span>
+                    </button>
 
-                {isOpen && (
-                  <div className="px-5 pb-5 sm:px-6 sm:pb-6 text-sm text-[#5b6478] leading-relaxed border-t border-slate-100/60 pt-3">
-                    <p>{item.a}</p>
+                    {isOpen && (
+                      <div className="px-5 pb-5 sm:px-6 sm:pb-6 text-sm text-[#5b6478] leading-relaxed border-t border-slate-100/60 pt-3">
+                        <p>{item.a}</p>
+                      </div>
+                    )}
                   </div>
-                )}
+                );
+              })}
+            </div>
+
+            {/* Bottom CTA Card */}
+            <div className="bg-gradient-to-br from-[#4d9bf5]/10 via-[#2dd4bf]/10 to-[#4d9bf5]/5 border border-[#4d9bf5]/20 rounded-3xl p-8 sm:p-10 text-center shadow-lg">
+              <div className="text-[#2dd4bf] text-xs font-extrabold tracking-widest uppercase mb-3">
+                How Campus Continents Helps
               </div>
-            );
-          })}
-        </div>
+              <h3 className="text-xl sm:text-2xl font-extrabold text-[#0a0e1a] tracking-tight mb-3">
+                Everything you need in one place
+              </h3>
+              <p className="text-[#5b6478] text-sm sm:text-base max-w-lg mx-auto leading-relaxed mb-6">
+                Campus Continents helps you explore postgraduate medical colleges, compare specialties, review previous cutoff trends, save your favourite colleges, access counselling information, and receive personalised counselling details on WhatsApp and Email to make informed admission decisions.
+              </p>
+              <button
+                type="button"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl bg-gradient-to-r from-[#4d9bf5] to-[#2dd4bf] hover:from-[#3a8be7] hover:to-[#22c55e] text-white font-extrabold text-sm shadow-lg shadow-[#4d9bf5]/25 transition-all hover:-translate-y-0.5 active:scale-95"
+              >
+                Get My Personalised Counselling Update
+              </button>
+            </div>
 
-        {/* Bottom CTA Card */}
-        <div className="bg-gradient-to-br from-[#4d9bf5]/10 via-[#2dd4bf]/10 to-[#4d9bf5]/5 border border-[#4d9bf5]/20 rounded-3xl p-8 sm:p-10 text-center shadow-lg">
-          <div className="text-[#2dd4bf] text-xs font-extrabold tracking-widest uppercase mb-3">
-            How Campus Continents Helps
           </div>
-          <h3 className="text-xl sm:text-2xl font-extrabold text-[#0a0e1a] tracking-tight mb-3">
-            Everything you need in one place
-          </h3>
-          <p className="text-[#5b6478] text-sm sm:text-base max-w-lg mx-auto leading-relaxed mb-6">
-            Campus Continents helps you explore postgraduate medical colleges, compare specialties, review previous cutoff trends, save your favourite colleges, access counselling information, and receive personalised counselling details on WhatsApp and Email to make informed admission decisions.
-          </p>
-          <button
-            type="button"
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl bg-gradient-to-r from-[#4d9bf5] to-[#2dd4bf] hover:from-[#3a8be7] hover:to-[#22c55e] text-white font-extrabold text-sm shadow-lg shadow-[#4d9bf5]/25 transition-all hover:-translate-y-0.5 active:scale-95"
-          >
-            Get My Personalised Counselling Update
-          </button>
-        </div>
-
-      </div>
-    </main>
+        </main>
+    </div>
   );
 }

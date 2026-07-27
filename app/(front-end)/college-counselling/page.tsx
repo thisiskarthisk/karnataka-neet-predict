@@ -907,7 +907,12 @@ export default function CollegeCounsellingPage() {
       </main>
 
       {/* Shared Counselling Modal */}
-      <CounsellingModal isOpen={expertModalOpen} onClose={() => setExpertModalOpen(false)} />
+      <CounsellingModal
+        isOpen={expertModalOpen}
+        onClose={() => setExpertModalOpen(false)}
+        studentProfile={profile}
+        selectedColleges={selectedColleges}
+      />
 
       {/* Responsive Styles */}
       <style jsx global>{`
