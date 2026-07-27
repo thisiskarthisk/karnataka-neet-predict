@@ -57,6 +57,28 @@ type HeroTab = 'rank' | 'college';
 const BRAND_GRADIENT = 'linear-gradient(135deg, #0095ff 0%, #00e5bf 60%, #2dd4bf 100%)';
 
 /**
+ * Calculates admission chance based on student rank vs college closing cutoff:
+ * - High Chance: when student rank <= closing cutoff (e.g. rank 5000 <= cutoff 6100).
+ * - Medium Chance: when student rank > closing cutoff, but close (e.g. cutoff 4800 to 4990 for rank 5000).
+ * - Low Chance / Reach: when student rank > closing cutoff by a larger margin (e.g. cutoff < 4800 for rank 5000).
+ */
+function calculateAdmissionChance(studentRank: number, closingCutoff: number): 'High' | 'Medium' | 'Reach' {
+  if (!closingCutoff || closingCutoff <= 0) return 'Reach';
+  if (!studentRank || studentRank <= 0) return 'High';
+
+  if (studentRank <= closingCutoff) {
+    return 'High';
+  }
+
+  const diff = studentRank - closingCutoff;
+  if (diff <= 350 || diff / closingCutoff <= 0.08) {
+    return 'Medium';
+  }
+
+  return 'Reach';
+}
+
+/**
  * Robustly matches a selected course (by code like MD_GEN_MED, MBBS or name)
  * against a cutoff's course name string returned by AI / DB.
  */
@@ -596,6 +618,8 @@ export default function HeroSection({
                 infoModalCollege.closest_cutoff ||
                 15000;
 
+              const userRankNum = parseInt(collegeRank, 10) || 0;
+
               const displayCategories = modalCategories.map((cat) => {
                 const found = courseCutoffs.find(
                   (c: any) =>
@@ -603,19 +627,13 @@ export default function HeroSection({
                     c.category_name?.toLowerCase().includes(cat.name.toLowerCase())
                 );
 
-                if (found) {
-                  return {
-                    category_name: cat.name,
-                    closing_rank: found.closing_rank || Math.round(baseGeneralCutoff * cat.factor),
-                    best_chance: found.best_chance || 'High',
-                  };
-                }
+                const finalCutoff = found?.closing_rank || Math.round(baseGeneralCutoff * cat.factor);
+                const computedChance = userRankNum > 0 ? calculateAdmissionChance(userRankNum, finalCutoff) : (found?.best_chance || 'High');
 
-                const estRank = Math.round(baseGeneralCutoff * cat.factor);
                 return {
                   category_name: cat.name,
-                  closing_rank: estRank,
-                  best_chance: 'High',
+                  closing_rank: finalCutoff,
+                  best_chance: computedChance,
                 };
               });
 

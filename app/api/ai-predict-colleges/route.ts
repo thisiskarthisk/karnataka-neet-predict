@@ -217,23 +217,20 @@
 //  * of, say, 75,000 means the last admitted candidate had rank 75,000. Anyone
 //  * with a WORSE (higher) rank than that did not get in that year — they are
 //  * NOT ELIGIBLE, not "Medium chance." AI models frequently get this backwards
-function computeChance(rankNum: number, closingRank: number): 'High' | 'Medium' | 'Reach' {
-  if (!closingRank || closingRank <= 0) return 'Reach';
+// function computeChance(rankNum: number, closingRank: number): 'High' | 'Medium' | 'Reach' {
+//   if (!closingRank || closingRank <= 0) return 'Reach';
 
-  // High Chance: Student rank is better than or equal to closing cutoff (e.g. rank 5000 <= cutoff 6100)
-  if (rankNum <= closingRank) {
-    return 'High';
-  }
+//   if (rankNum <= closingRank) {
+//     return 'High';
+//   }
 
-  // Medium Chance: Student rank is slightly worse than closing cutoff (e.g. cutoff 4800..4990 for rank 5000)
-  const diff = rankNum - closingRank;
-  if (diff <= 350 || diff / closingRank <= 0.08) {
-    return 'Medium';
-  }
+//   const diff = rankNum - closingRank;
+//   if (diff <= 350 || diff / closingRank <= 0.08) {
+//     return 'Medium';
+//   }
 
-  // Low Chance / Reach: Student rank is worse than closing cutoff by a larger margin (e.g. cutoff < 4800 for rank 5000)
-  return 'Reach';
-}
+//   return 'Reach';
+// }
 
 // /**
 //  * Normalizes whatever collegeType-ish value the AI returned into one of our
@@ -911,21 +908,21 @@ function isLikelyEchoedRank(rankNum: number, closingRank: number): boolean {
  */
 function computeChance(rankNum: number, closingRank: number): string | null {
   if (!closingRank || closingRank <= 0) return null;
-  if (isLikelyEchoedRank(rankNum, closingRank)) return null; // reject echoed/hallucinated cutoff
+  if (isLikelyEchoedRank(rankNum, closingRank)) return null;
 
+  // High Chance: Student rank is better than or equal to closing cutoff (e.g. rank 5000 <= cutoff 6100)
   if (rankNum <= closingRank) {
-    const margin = (closingRank - rankNum) / closingRank; // how much headroom below the cutoff
-    if (margin >= 0.3) return 'High';
-    if (margin >= 0.1) return 'Medium';
-    return 'Low';
-  } else {
-    // If the rank is worse than the cutoff, but within 20% margin, it is a realistic "Reach" option!
-    const overMargin = (rankNum - closingRank) / closingRank;
-    if (overMargin <= 0.20) {
-      return 'Low'; // Treated as Reach / Low chance
-    }
-    return null; // Not eligible
+    return 'High';
   }
+
+  // Medium Chance: Student rank is slightly worse than closing cutoff (e.g. cutoff 4800..4990 for rank 5000)
+  const diff = rankNum - closingRank;
+  if (diff <= 350 || diff / closingRank <= 0.08) {
+    return 'Medium';
+  }
+
+  // Low Chance / Reach: Student rank is worse than closing cutoff by a larger margin (e.g. cutoff < 4800 for rank 5000)
+  return 'Reach';
 }
 
 /**
@@ -1327,14 +1324,7 @@ export async function POST(req: NextRequest) {
 
       if (pgMatches.length > 0 && isGeneralOrAllCategory) {
         const formattedColleges = pgMatches.map((col) => {
-          let chance = 'High';
-          if (rankNum <= 10 || rankNum <= col.closingRank) {
-            chance = 'High';
-          } else if (rankNum <= col.closingRank + 500) {
-            chance = 'Medium';
-          } else {
-            chance = 'Reach';
-          }
+          const chance = rankNum <= 10 ? 'High' : computeChance(rankNum, col.closingRank);
 
           const auth = getAuthorityForState('Karnataka');
 
@@ -1401,14 +1391,7 @@ export async function POST(req: NextRequest) {
 
       if (ugMatches.length > 0 && isGeneralOrAllCategory) {
         const formattedColleges = ugMatches.map((col) => {
-          let chance = 'High';
-          if (rankNum <= 1000 || rankNum <= col.closingRank) {
-            chance = 'High';
-          } else if (rankNum <= col.closingRank + 1000) {
-            chance = 'Medium';
-          } else {
-            chance = 'Reach';
-          }
+          const chance = rankNum <= 1000 ? 'High' : computeChance(rankNum, col.closingRank);
 
           const auth = getAuthorityForState('Karnataka');
 
