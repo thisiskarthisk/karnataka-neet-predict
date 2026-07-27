@@ -708,10 +708,10 @@ export default function HeroSection({
         <Reveal>
           <div className="section-head center mb-12 hero-heading-wrap">
             <h2 className="hero-title-cc font-extrabold text-white tracking-tight leading-tight">
-              Find Your Eligible Karnataka MBBS Colleges
+              Find Your Eligible <span className="bg-gradient-to-r from-[#0095ff] via-[#00e5bf] to-[#2dd4bf] bg-clip-text text-transparent">Karnataka</span> Medical Colleges
             </h2>
             <p className="hero-subtitle-cc" style={{ color: '#fff' }}>
-              Predict eligible Karnataka medical colleges using your NEET rank and category. Get personalized college recommendations and counselling schedules.
+              Predict eligible <span className="text-[#00e5bf] font-bold">Karnataka</span> medical colleges using your NEET rank and category. Get personalized college recommendations and counselling schedules.
             </p>
           </div>
         </Reveal>

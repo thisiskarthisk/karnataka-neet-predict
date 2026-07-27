@@ -418,7 +418,7 @@ export default function CollegeCounsellingPage() {
                   className="section-dark-btn w-full mt-2 py-3 px-4 rounded-xl font-extrabold text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <Handshake className="w-4 h-4" />
-                  <span>Alert my counselling window on Whatsapp</span>
+                  <span>Show counselling window</span>
                 </button>
               </div>
             </div>
@@ -443,7 +443,7 @@ export default function CollegeCounsellingPage() {
                     </p>
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-2 shrink-0">
+                  {/* <div className="flex flex-wrap items-center gap-2 shrink-0">
                     <button
                       onClick={handleDownloadPDF}
                       disabled={downloadingPdf}
@@ -464,7 +464,7 @@ export default function CollegeCounsellingPage() {
                       <Handshake className="w-4 h-4" />
                       <span>Alert my counselling window on Whatsapp</span>
                     </button>
-                  </div>
+                  </div> */}
                 </div>
 
                 {/* 2. SCROLLABLE MIDDLE CONTENT AREA */}
@@ -889,22 +889,13 @@ export default function CollegeCounsellingPage() {
                 </div>
 
                 {/* 3. FIXED BOTTOM FOOTER BAR */}
-                <div className="shrink-0 p-4 sm:p-5 border-t border-slate-200 bg-white/95 backdrop-blur-sm shadow-[0_-6px_16px_rgba(15,23,42,0.06)] flex items-center justify-end gap-2 sm:gap-3 z-10">
-                  {expandedCollegeId !== null && (
-                    <button
-                      type="button"
-                      onClick={() => setExpandedCollegeId(null)}
-                      className="px-4 py-2.5 rounded-xl text-xs font-bold text-slate-600 bg-white hover:bg-slate-100 border border-slate-200 transition-colors cursor-pointer"
-                    >
-                      Close Timeline
-                    </button>
-                  )}
+                <div className="sticky bottom-0 z-20 shrink-0 p-4 sm:p-5 border-t border-slate-200 bg-white/95 backdrop-blur-sm shadow-[0_-6px_16px_rgba(15,23,42,0.06)] flex items-center justify-end gap-2 sm:gap-3">
                   <button
-                    onClick={() => router.push('/?tab=college&restore=true')}
-                    className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-2xl text-xs font-extrabold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-250 transition-colors cursor-pointer"
+                    onClick={() => setExpertModalOpen(true)}
+                    className="section-dark-btn inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 rounded-2xl text-xs font-black transition-all shadow-md active:scale-95 cursor-pointer"
                   >
-                    <ArrowLeft className="w-4 h-4" />
-                    <span>Back to College Predictor</span>
+                    <Handshake className="w-4 h-4" />
+                    <span>Alert my counselling window on Whatsapp</span>
                   </button>
                 </div>
 
